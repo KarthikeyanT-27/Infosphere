@@ -33,6 +33,7 @@ function Login() {
 
            //navigate portal
            if(userType==="viewers") navigate("/viewers");
+           else if(userType==="admin") navigate("/admin");
            else if (userType==="informater") navigate("/informater");
         } catch (error) {
             console.log(error);
@@ -45,6 +46,7 @@ function Login() {
             <h3>Choose login mode</h3>
             <div className="portal">
               <button onClick={()=> setUserType("informater")}>Reporter</button>
+              <button onClick={()=> setUserType("admin")}> admin</button>
               <button onClick={()=> setUserType("viewers")}> viewers</button>
             </div>
             <div className="login">

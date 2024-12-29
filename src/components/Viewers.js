@@ -1,81 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ViewerPortal() {
-  const [articles, setArticles] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [bookmarks, setBookmarks] = useState([]);
+function App() {
+    const [articles, setArticles] = useState([]);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await axios.get('https://newsapi.org/v2/top-headlines', {
-          params: {
-            country: 'us',
-            apiKey: '72ea8c0fabb84f018e44605aaf3e9ec8',
-          },
-        });
-        setArticles(response.data.articles);
-      } catch (error) {
-        console.error('Error fetching articles:', error);
-      }
-    };
-    fetchArticles();
-  }, []);
+    useEffect(() => {
+        const fetchApprovedArticles = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/article/articles');
+                setArticles(response.data);
+            } catch (error) {
+                console.error('Error fetching articles', error);
+            }
+        };
+        fetchApprovedArticles();
+    }, []);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get('https://newsapi.org/v2/everything', {
-        params: {
-          q: searchQuery,
-          apiKey: '72ea8c0fabb84f018e44605aaf3e9ec8',
-        },
-      });
-      setArticles(response.data.articles);
-    } catch (error) {
-      console.error('Error searching articles:', error);
-    }
-  };
-
-  const handleBookmark = (article) => {
-    setBookmarks([...bookmarks, article]);
-  };
-
-  return (
-    <div>
-      <h1>Viewer Portal</h1>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search News"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          required
-        />
-        <button type="submit">Search</button>
-      </form>
-      <div>
-        <h2>Top Headlines</h2>
-        {articles.map((article, index) => (
-          <div key={index}>
-            <h3>{article.title}</h3>
-            <p>{article.description}</p>
-            <button onClick={() => handleBookmark(article)}>Bookmark</button>
-          </div>
-        ))}
-      </div>
-      <div>
-        <h2>Bookmarks</h2>
-        {bookmarks.map((bookmark, index) => (
-          <div key={index}>
-            <h3>{bookmark.title}</h3>
-            <p>{bookmark.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h1>News Viewer Portal</h1>
+            <ul>
+                {articles.map((article, index) => (
+                    <li key={index}>
+                        <h2>{article.title}</h2>
+                        <p>{article.description}</p>
+                        <a href={article.url} target="_blank" rel="noopener noreferrer">Read more</a>
+                        
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
-export default ViewerPortal;
+export default App;

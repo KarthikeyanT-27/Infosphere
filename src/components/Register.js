@@ -9,7 +9,7 @@ function Register() {
     const [role, setRole] = useState("viewers");
     const [name, setName] = useState("");
     const[district,setDistrict]=useState("");
-    const[mobilenumber,,setMobilenumber]=useState("");
+    const[mobilenumber,setMobilenumber]=useState("");
     const[empid,setEmpid]=useState("");
     const[designation,setDesignation]=useState("viewers");
 
@@ -42,6 +42,7 @@ function Register() {
             <label>Select Role</label>
             <select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="viewers">viewers</option>
+                <option value="admin">admin</option>
                 <option value="informater">Employers</option>
                 
             </select>

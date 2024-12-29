@@ -4,11 +4,13 @@ import axios from 'axios';
 function InformatorPortal() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [place, setPlace] = useState('');
+  const [link, setLink] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/articles', { title, content });
+      await axios.post('http://localhost:5000/api/article/articles', { title, content,place,link });
       alert('Article posted successfully');
       setTitle('');
       setContent('');
@@ -35,6 +37,21 @@ function InformatorPortal() {
           onChange={(e) => setContent(e.target.value)}
           required
         ></textarea>
+        
+        <input
+          type="text"
+          placeholder="Link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          
+        />
+        <input
+          type="text"
+          placeholder="Place"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          required
+        />
         <button type="submit">Post Article</button>
       </form>
     </div>

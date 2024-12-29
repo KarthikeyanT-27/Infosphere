@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Viewers from "./components/Viewers";
 import Informater from "./components/Informater";
 import './App.css';
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/Register" element={<Register />} />
                 <Route path="/viewers" element={<Viewers />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/informater" element={<Informater />} />
             </Routes>
         </Router>

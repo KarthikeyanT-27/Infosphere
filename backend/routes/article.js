@@ -2,36 +2,28 @@ const express = require('express');
 const Article = require('../models/Article');
 const router = express.Router();
 
-// Fetch top headlines
-router.get('/top-headlines', async (req, res) => {
-  try {
-    const response = await axios.get('https://newsapi.org/v2/top-headlines', {
-      params: { country: 'us', apiKey: process.env.NEWS_API_KEY },
-    });
-    res.json(response.data.articles);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching top headlines', error });
-  }
+
+
+
+
+// Endpoint to get news from MongoDB
+router.get('/articles', async (req, res) => {
+    try {
+        const articles = await Article.find({ approved: true });
+        res.json(articles);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching articles' });
+    }
 });
 
-// Search articles
-router.get('/search', async (req, res) => {
-  const { q } = req.query;
-  try {
-    const response = await axios.get('https://newsapi.org/v2/everything', {
-      params: { q, apiKey: process.env.NEWS_API_KEY },
-    });
-    res.json(response.data.articles);
-  } catch (error) {
-    res.status(500).json({ message: 'Error searching articles', error });
-  }
-});
+
+
 
 // Post new article
 router.post('/articles', async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content,link,place } = req.body;
   try {
-    const newArticle = new Article({ title, content, date: new Date() });
+    const newArticle = new Article({ title, content, date: new Date() ,link, place});
     await newArticle.save();
     res.status(201).json(newArticle);
   } catch (error) {

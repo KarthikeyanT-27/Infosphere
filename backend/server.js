@@ -21,13 +21,16 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads',express.static('uploads'));
 
+
 // Routes
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const adminRoutes=require('./routes/admin');
+app.use('/api/admin',adminRoutes);
 
 const articleRoutes = require('./routes/article');
-app.use('/api', articleRoutes);
+app.use('/api/article', articleRoutes);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
