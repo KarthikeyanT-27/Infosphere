@@ -6,7 +6,7 @@ const Article = require('../models/Article');
 // Fetch pending articles
 router.get('/pending-articles', async (req, res) => {
     try {
-        const articles = await Article.find({ approved: false });
+        const articles = await Article.find({ approved: false ,rejected:false});
         res.json(articles);
         console.log(articles);
     } catch (error) {
@@ -21,6 +21,17 @@ router.post('/approve-article/:id', async (req, res) => {
     try {
         const article = await Article.findByIdAndUpdate(id, { approved: true }, { new: true });
         res.json({ message: 'Article approved', article });
+    } catch (error) {
+        res.status(500).json({ error: 'Error approving article' });
+    }
+});
+
+// Reject an article
+router.post('/reject-article/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const article = await Article.findByIdAndUpdate(id, { rejected: true });
+        res.json({ message: 'Article rejected', article });
     } catch (error) {
         res.status(500).json({ error: 'Error approving article' });
     }

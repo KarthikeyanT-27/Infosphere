@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './informater.css';
+
 
 function InformatorPortal() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [place, setPlace] = useState('');
   const [link, setLink] = useState('');
+  const[category,setCategory]=useState('Technology');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/article/articles', { title, content,place,link });
+      await axios.post('http://localhost:5000/api/article/articles', { title, content,place,link,category });
       alert('Article posted successfully');
       setTitle('');
       setContent('');
@@ -19,9 +22,10 @@ function InformatorPortal() {
       alert('Error posting article');
     }
   };
+  const categories=[ 'Technology', 'Education', 'Business','Health','sports','entertainment','lifestyle','environment','science','world news'];
 
   return (
-    <div>
+    <div className='reporter'>
       <h1>Informator Portal</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -52,6 +56,16 @@ function InformatorPortal() {
           onChange={(e) => setPlace(e.target.value)}
           required
         />
+        <select value={category} onChange={(e)=>setCategory(e.target.value)}>
+        {categories.map(cat => (
+                  <option
+                      key={cat}
+                      className="category-button"
+                      onClick={() => setCategory(cat === 'All' ? '' : cat.toLowerCase())}
+                  >
+                      {cat}
+                  </option>
+              ))}</select>
         <button type="submit">Post Article</button>
       </form>
     </div>

@@ -1,0 +1,64 @@
+
+
+body {
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.admin {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.admin h1, .admin h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.reject{
+    background-color: red;
+    margin-left: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+li h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #007bff;
+}
+
+li p {
+    margin: 10px 0;
+    color: #666;
+}
+
+button {
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}

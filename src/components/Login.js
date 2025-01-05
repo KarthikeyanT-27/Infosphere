@@ -10,7 +10,6 @@ function Login() {
       email:"",
       password:"",
     });
-    const [userType,setUserType]= useState("viewers");
     const navigate = useNavigate();
     
     const handleChange=(e)=>{
@@ -21,20 +20,21 @@ function Login() {
     const handleLogin = async (e) => {
       e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:5000/api/auth/login/${userType}`,{ email:credential.email, password:credential.password, },
+            const response = await axios.post('http://localhost:5000/api/auth/login',{ email:credential.email, password:credential.password, },
               {
                 headers:{
                   'Content-Type':'application/json',
                 },
               }
             );
-           const {token}=response.data;
+           const {token,role}=response.data;
+           
            localStorage.setItem('token',token);
-
+          
            //navigate portal
-           if(userType==="viewers") navigate("/viewers");
-           else if(userType==="admin") navigate("/admin");
-           else if (userType==="informater") navigate("/informater");
+           if(role==="viewers") navigate("/viewers");
+           else if(role==="admin") navigate("/admin");
+           else if (role==="informater") navigate("/informater");
         } catch (error) {
             console.log(error);
         }
@@ -43,15 +43,10 @@ function Login() {
 
     return (
         <div className="fullportal">
-            <h3>Choose login mode</h3>
-            <div className="portal">
-              <button onClick={()=> setUserType("informater")}>Reporter</button>
-              <button onClick={()=> setUserType("admin")}> admin</button>
-              <button onClick={()=> setUserType("viewers")}> viewers</button>
-            </div>
+          <h2>INFOSPHERE WELCOME YOU!</h2>
             <div className="login">
+              <h2>Welcome to login page!</h2>
             <form onSubmit={handleLogin}>
-              <h2>{userType.charAt(0).toUpperCase()+userType.slice(1)} login mode </h2>
             <label >Enter your E-mail</label>
             <input type="email" name="email"  value={credential.email} onChange={handleChange} />
             <label >Enter your password</label>

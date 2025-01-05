@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './admin.css';
 
 function Admin() {
     const [pendingArticles, setPendingArticles] = useState([]);
@@ -24,17 +25,29 @@ function Admin() {
             console.error('Error approving article', error);
         }
     };
+    const rejectArticle = async (id) => {
+        try {
+            await axios.post(`http://localhost:5000/api/admin/reject-article/${id}`);
+            setPendingArticles(pendingArticles.filter(article => article._id !== id));
+        } catch (error) {
+            console.error('Error rejecting article', error);
+        }
+    };
+
 
     return (
-        <div>
+        <div className='admin'>
             <h1>Admin Portal</h1>
             <h2>Pending Articles</h2>
             <ul>
                 {pendingArticles.map((article, index) => (
                     <li key={index}>
                         <h3>{article.title}</h3>
-                        <p>{article.description}</p>
+                        <p>{article.content}</p>
+                        <p>{article.date}</p>
+                        <p>{article.reporter}</p>
                         <button onClick={() => approveArticle(article._id)}>Approve</button>
+                        <button className='reject' onClick={()=>rejectArticle(article._id)}>Reject</button>
                     </li>
                 ))}
             </ul>

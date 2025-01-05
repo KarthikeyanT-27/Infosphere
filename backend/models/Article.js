@@ -14,7 +14,13 @@ const articleSchema = new Schema({
   approved:{
     type:Boolean,
     default:false
-  }
+  },rejected:{
+    type:Boolean,
+    default:false
+  },
+  category:{
+    type:String
+  },
 });
 
 module.exports = mongoose.model('Article', articleSchema);

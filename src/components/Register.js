@@ -37,7 +37,7 @@ function Register() {
     };
 
     return (
-        <div className="fullportal">
+        <div className="fullportalr">
             <h2>Register</h2>
             <label>Select Role</label>
             <select value={role} onChange={(e) => setRole(e.target.value)}>
